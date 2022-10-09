@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Text-to-Speech</title>
+    <link rel="icon" href="favicon.png" type="image/icon" sizes="16x16">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="h1 mt-4">
+        <h1>Text-to-Speech</h1>
+    </div>
+
+    <div class="text-container" style='width:70%'>
+        <textarea placeholder="Enter here" class="form-control my-2 textarea" id="text" maxlength="500"></textarea>
+        <p id="count"></p>
+        <button id="start" class="px-3 py-1">Start</button>
+        <button id="stop" class="px-3 py-1">Stop</button>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+            </script>
+</body>
+
+<script>
+    var myT = document.getElementById("text");
+    var cOunt = document.getElementById("count");
+    var limit = 500;
+    cOunt.textContent = 0 + "/" + limit;
+
+    myT.addEventListener("input", function () {
+        var textLength = myT.value.length;
+        cOunt.textContent = textLength + "/" + limit;
+
+        if (textLength > limit) {
+            myT.style.borderColor = "#ff2851";
+            cOunt.style.color = "#ff2851";
+        }
+        else {
+            myT.style.borderColor = "#b2b2b2";
+            cOunt.style.color = "#737373";
+        }
+    });
+</script>
+
+<script>
+    const textEl = document.getElementById('text');
+    const speakEl = document.getElementById('start');
+    const stopEl = document.getElementById('stop');
+
+    speakEl.addEventListener('click', speakText);
+    stopEl.addEventListener('click', stopText);
+
+    function speakText() {
+        window.speechSynthesis.cancel();
+
+        const text = textEl.value;
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
+    }
+
+    function stopText() {
+        window.speechSynthesis.cancel();
+    }
+</script>
+
+</html>
